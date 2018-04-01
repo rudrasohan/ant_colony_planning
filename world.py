@@ -7,18 +7,23 @@ import numpy as np
 class World:
     size = (5, 5)
     grid = []
+    start = (0, 0)
+    goal = (4, 4)
     obstacles = []
 
-    def __init__(self, size):
-        self.size = size
+    def __init__(self):
+        data = json.load(open('world.json'))
+        self.size = (data["grid_size_x"], data["grid_size_y"])
+        self.start = (data["start_pos_x"], data["start_pos_y"])
+        self.goal = (data["goal_pos_x"], data["goal_pos_y"])
         grid = []
         obs = []
-        for i in range(size[0]):
+        for i in range(self.size[0]):
             llist = []
-            for j in range(size[1]):
+            for j in range(self.size[1]):
                 llist.append(deepcopy(Node((i, j), 0.5)))
             grid.append(deepcopy(llist))
-        data = json.load(open('obstacle.json'))
+        
         pos = data["positions"]
         for i in range(data["num_obstacle"]):
             coor = pos[i]

@@ -6,27 +6,27 @@ import numpy as np
 import argparse
 
 parser = argparse.ArgumentParser(description='Hyperparameters')
-parser.add_argument("length", type=int, help="Lenth of the Grid")
-parser.add_argument("breadth", type=int, help="Breadth of the Grid")
-parser.add_argument("goal_x", type=int, help="Goal Coordinate x")
-parser.add_argument("goal_y", type=int, help="Goal Coordinate y")
+parser.add_argument("alpha", type=float, help="Parameter Alpha")
+parser.add_argument("beta", type=float, help="Parameter Beta")
+parser.add_argument("Q", type=int, help="Parameter Q")
 parser.add_argument("num_ants", type=int, help="Number of Ants")
+parser.add_argument("num_gen", type=int, help="Number of Generations")
 parser.add_argument("-v", "--verbose", action="store_true",
                     help="Display individual paths")
 args = parser.parse_args()
 
 
-a = World((args.breadth, args.length))
+a = World()
 print(a)
-length = args.length * args.breadth
-Q = 1000.0
-alpha = 5
-beta = 2
+length = a.size[0]*a.size[1]
+Q = args.Q
+alpha = args.alpha
+beta = args.beta
 num_ants = args.num_ants
-goal = (args.goal_x, args.goal_y)
-start_node = (0, 0)
+gen = args.num_gen
+goal = a.goal
+start_node = a.start
 epsilon = 0.0005
-gen = 50
 
 
 def euclidean(node):
