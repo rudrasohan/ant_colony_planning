@@ -44,6 +44,7 @@ def choose_max(nodes):
 
 def choose_prob_max(nodes):
     llist = []
+    #print(nodes)
     num_list = list(range(len(nodes)))
     # print(num_list)
     summ = 0.0
@@ -64,18 +65,23 @@ for l in range(gen):
         i = 0
         node = start_node
         path = []
+        a.visited.clear()
+        a.visited[a.start] = 1
         # print(node)
         while(node != goal and i <= length):
 
             nb = a.get_neigbour(node)
             random.shuffle(nb)
-            if (k % 4 != 0):
+            #print(not nb)
+            if not nb:
+                break
+            if (i%4 != 0):
                 move = choose_prob_max(nb)
-                # print("PROB")
             else:
                 move = choose_max(nb)
                 # print("MAX")
-            # print(move)
+            #print(type(move.pos))
+            a.visited[move.pos] = 1
             # print(move,i)
             node = move.pos
             path.append(deepcopy(node))
@@ -85,6 +91,7 @@ for l in range(gen):
             llist.append(deepcopy((path, i)))
             avg_len_gen = avg_len_gen + i
             # print("True", i, j)
+        #print(a)
     a.evaporate_pheromone(0.6)
 
     for path in llist:

@@ -9,7 +9,8 @@ class World:
     grid = []
     start = (0, 0)
     goal = (4, 4)
-    obstacles = []
+    obstacle_dict = {}
+    visited = {}
 
     def __init__(self):
         data = json.load(open('world.json'))
@@ -17,7 +18,6 @@ class World:
         self.start = (data["start_pos_x"], data["start_pos_y"])
         self.goal = (data["goal_pos_x"], data["goal_pos_y"])
         grid = []
-        obs = []
         for i in range(self.size[0]):
             llist = []
             for j in range(self.size[1]):
@@ -27,20 +27,19 @@ class World:
         pos = data["positions"]
         for i in range(data["num_obstacle"]):
             coor = pos[i]
-            obs.append(deepcopy((coor[0], coor[1])))
             grid[coor[0]][coor[1]].pheromone = 0.0
-        self.obstacles = obs
+            self.obstacle_dict[(coor[0], coor[1])] = 1
         self.grid = grid
 
     def __str__(self):
-        return "Size=(%s)\nWorld:\n%s\nObstacles:%s" % (self.size, self.grid, self.obstacles)
+        return "Size=(%s)\nWorld:\n%s\nObstacles:%s\nVisited:%s" % (self.size, self.grid, self.obstacle_dict, self.visited)
 
     def get_neigbour(self, pos):
         nbh = []
         action_set = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         for act in action_set:
             nb = (pos[0] + act[0], pos[1] + act[1])
-            if (nb[0] < self.size[0] and nb[1] < self.size[1] and nb[0] >= 0 and nb[1] >= 0):
+            if (nb[0] < self.size[0] and nb[1] < self.size[1] and nb[0] >= 0 and nb[1] >= 0 and not(nb in self.visited) and not(nb in self.obstacle_dict)):
                 nbh.append(deepcopy(Node(nb,self.grid[nb[0]][nb[1]].pheromone)))
         return nbh
 
