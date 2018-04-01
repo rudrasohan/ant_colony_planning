@@ -23,7 +23,7 @@ class World:
             for j in range(self.size[1]):
                 llist.append(deepcopy(Node((i, j), 0.5)))
             grid.append(deepcopy(llist))
-        
+
         pos = data["positions"]
         for i in range(data["num_obstacle"]):
             coor = pos[i]
