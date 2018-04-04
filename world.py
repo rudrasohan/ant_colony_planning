@@ -54,7 +54,7 @@ class World:
 
     def update_pheromone(self, pos, val):
         ph = self.grid[pos[0]][pos[1]].pheromone + val
-        self.grid[pos[0]][pos[1]].pheromone = ph
+        self.grid[pos[0]][pos[1]].pheromone = round(ph, 3)
 
     def visualize(self, start, goal, path):
         mat = np.zeros(self.size)
@@ -68,5 +68,7 @@ class World:
         mat = np.zeros(self.size)
         for i in range(self.size[0]):
             for j in range(self.size[1]):
-                mat[i][j] = self.grid[i][j].pheromone
+                mat[i][j] = round(self.grid[i][j].pheromone, 3)
         print(mat)
+
+
