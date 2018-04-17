@@ -56,6 +56,30 @@ def choose_prob_max(nodes):
     # print(prob_node[0])
     return nodes[prob_node[0]]
 
+def get_path(start, goal):
+    node = goal
+    path = []
+    f = False
+    a.visited[goal] = 1
+    j = 0
+    while(node != start and not f):
+        nb = a.get_neigbour(node)
+        print(nb)
+        for i in nb:
+            if(i.pos == start_node):
+                path.append(deepcopy(i.pos))
+                f = True
+                j = j + 1
+        if (not f):
+            move = choose_max(nb)
+            a.visited[move.pos] = 1
+            node = move.pos
+            path.append(deepcopy(node))
+            j = j + 1
+    return (path, j)
+
+
+a.visualize_world()
 
 for l in range(gen):
     j = 0
@@ -102,5 +126,11 @@ for l in range(gen):
         if args.verbose:
             a.visualize(start_node, goal, path)
 
-    a.visualize_world()
+    #a.visualize_world()
     print((avg_len_gen / (j + epsilon)))
+
+a.visualize_world()
+a.visited.clear()
+pth = get_path(start_node, goal)
+print(pth)
+a.visualize(start_node, goal, pth)

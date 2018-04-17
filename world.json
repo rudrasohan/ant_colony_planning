@@ -1,11 +1,11 @@
 {
   "num_obstacle": 5,
-  "grid_size_x": 10,
-  "grid_size_y": 10,
+  "grid_size_x": 20,
+  "grid_size_y": 20,
   "start_pos_x": 0,
   "start_pos_y": 0,
-  "goal_pos_x": 9,
-  "goal_pos_y": 9,
+  "goal_pos_x": 15,
+  "goal_pos_y": 15,
   "positions": [
     [2,3],
     [4,5],
